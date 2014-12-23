@@ -1,4 +1,4 @@
- /*   // revolutions per second
+/*    // revolutions per second
     var angularSpeed = 0.2; 
     var lastTime = 0;
     var pointCloud,render,camera,scene,sphere;
@@ -68,7 +68,15 @@
         var color = new THREE.Color("rgb(255,255,255)");
         var meshMaterial = new THREE.MeshBasicMaterial;
         meshMaterial.color = color;
-        sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 0, 0), meshMaterial);
+        var mats = [];
+        mats.push(new THREE.MeshBasicMaterial({ color: 0x009e60  }));
+        mats.push(new THREE.MeshBasicMaterial({ color: 0x0051ba  }));
+        mats.push(new THREE.MeshBasicMaterial({ color: 0xffd500  }));
+        mats.push(new THREE.MeshBasicMaterial({ color: 0xff5800  }));
+        mats.push(new THREE.MeshBasicMaterial({ color: 0xC41E3A  }));
+        mats.push(new THREE.MeshBasicMaterial({ color: 0xffffff  }));
+        var faceMaterial = new THREE.MeshFaceMaterial(mats);
+        sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 3, 2), faceMaterial);
         sphere.position.x = 100;
         sphere.overdraw = true;
         scene.add(sphere);
@@ -135,6 +143,10 @@
         }
       }
 
+      function mole(number1, number2){
+        return number2 - parseInt(number2 / number1) * number1;
+      }
+
       function generateCube(nCubes, doMerge, generated){
         var img1 = new Image();//document.getElementById('myImg')
         img1.src = "file:///Users/xuehanyu/Documents/water.png";
@@ -146,55 +158,34 @@
         var width = img1.width, height = img1.height;
         var data = context.getImageData(0, 0, width,height).data;
 
-
-        var color = new THREE.Color("rgb(255,255,255)");
-        var meshMaterial  = new THREE.MeshNormalMaterial();
-  //      meshMaterial.color = color;
-        var sphere = new THREE.Mesh(new THREE.SphereGeometry(100, 3, 2), meshMaterial );
-        sphere.position.x = 100;
-        sphere.overdraw = true;
-        scene.addObject(sphere); 
-
-
         var p1 = 0.8;
-        var geometry  = new THREE.SphereGeometry(5, 3, 2);
- //       var material  = new THREE.MeshBasicMaterial({color: 0xffff00});
- //       var mesh  = new THREE.Mesh( geometry, material );
+        var geometry  = new THREE.SphereGeometry(10, 3, 2);
 
-        document.getElementById("generationMsg").innerHTML  = (nCubes-generated)+ " cubes to generate";
-   //     for ( var i = 0; i < 100000 && nCubes > generated; i++, generated++ ) { 
-        nCubes = width * height;
-        for(var l = 0 ; l < nCubes && nCubes > generated; ++l){
+//        document.getElementById("generationMsg").innerHTML  = (nCubes-generated)+ " cubes to generate";
+        nCubes = width * height ;
+
+        for(var l = 0 ; l < nCubes && nCubes > generated; l++){
           generated++;
-    
-  /*        var basicFace = new THREE.MeshBasicMaterial();
+
+          var material = new THREE.MeshNormalMaterial();
+          var basicFace = new THREE.MeshBasicMaterial();
           basicFace.color.r = data[4*l]   / 255;
           basicFace.color.g = data[4*l+1] / 255;
           basicFace.color.b = data[4*l+2] / 255;
-          var mats = [];
-
-          for ( var j = 0; j < geometry.faces.length; j ++ ) {
-            mats.push(basicFace);
-          }
-          
-          var material  = new THREE.MeshFaceMaterial(mats); */
-          var material = new THREE.MeshNormalMaterial();
-          var mesh  = new THREE.Mesh( geometry, material );
+          var mesh  = new THREE.Mesh( geometry, basicFace );
 
           var gray =  data[4*l]*0.299 + data[4*l+1]*0.587 + data[4*l+2]*0.114;
-          mesh.position.x = l/height * 10 - 1000;//Math.random() * 3000 - 1500;
-          mesh.position.y = l%height * 10 - 1000;//Math.random() * 3000 - 1500;
-          mesh.position.z = 1/Math.acos(gray/255*p1) * 1000 - 1000;//Math.random() * 3000 - 1500;
-          mesh.rotation.x = l/height;//Math.random() * 360 * ( Math.PI / 180 );
-          mesh.rotation.y = l%height;//Math.random() * 360 * ( Math.PI / 180 );
-
+          mesh.position.x = parseInt(l / width) * 10 - 1000;
+          mesh.position.z = mole(width,l) * 10 - 1000;
+          mesh.position.y = 1/Math.acos(gray/255*p1) * 1000 - 1000;
+    
          if( doMerge ){
             THREE.GeometryUtils.merge(mergedGeo, mesh);
           }else{
             mesh.matrixAutoUpdate = false;
             mesh.updateMatrix();
             group.addChild( mesh ); 
-          }   
+          }  
         }
          if( nCubes !== generated){
           setTimeout(function(){  generateCube(nCubes, doMerge, generated); }, 0)
@@ -202,7 +193,7 @@
         }
 
         if( nCubes === generated ){
-          document.getElementById("generationMsg").innerHTML  = generated+ " cubes generated";
+//          document.getElementById("generationMsg").innerHTML  = generated+ " cubes generated";
 
           if( doMerge ){
             mergedGeo.computeFaceNormals();
@@ -210,8 +201,7 @@
             group.matrixAutoUpdate = false;
             group.updateMatrix();
           } 
-  
-          scene.addObject( group );         
+            scene.addObject( group );         
         }
       }
 
@@ -262,8 +252,6 @@
         mouseY = ( event.clientY - windowHalfY ) * 10;
 
       }
-
-      //
 
       function animate() {
 
