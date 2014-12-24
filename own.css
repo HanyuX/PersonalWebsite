@@ -239,6 +239,31 @@ html, body {
     box-shadow: 0px 0px 7px #999;
 }
 
+.hcphotos3{
+    max-width: 100%;
+    max-height: 700px;
+    display: block;
+    margin: 0 auto 20px auto;
+    border-radius: 4px;
+    padding: 5px;
+    border: solid 1px #CCC;
+    -moz-box-shadow: 0px 0px 7px #999;
+    -webkit-box-shadow: 0px 0px 7px #999;
+    box-shadow: 0px 0px 7px #999;
+}
+
+
+.hcphotos4{
+    max-width: 100%;
+    max-height: 150px;
+    margin: 0 auto 20px auto;
+    border-radius: 4px;
+    padding: 5px;
+    border: solid 1px #CCC;
+    -moz-box-shadow: 0px 0px 7px #999;
+    -webkit-box-shadow: 0px 0px 7px #999;
+    box-shadow: 0px 0px 7px #999;
+}
 
 #hcbannerinside li{
     display: none;

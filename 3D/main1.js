@@ -159,7 +159,7 @@
         var data = context.getImageData(0, 0, width,height).data;
 
         var p1 = 0.8;
-        var geometry  = new THREE.SphereGeometry(13, 3, 2);
+        var geometry  = new THREE.SphereGeometry(10, 3, 2);
 
 //        document.getElementById("generationMsg").innerHTML  = (nCubes-generated)+ " cubes to generate";
         nCubes = width * height ;
@@ -167,7 +167,7 @@
         for(var l = 0 ; l < nCubes && nCubes > generated; l++){
           generated++;
 
-          var material = new THREE.MeshBasicMaterial({ color: 0x5050b0  });
+          var material = new THREE.MeshNormalMaterial();
           var basicFace = new THREE.MeshBasicMaterial();
           basicFace.color.r = data[4*l]   / 255;
           basicFace.color.g = data[4*l+1] / 255;
@@ -177,7 +177,7 @@
           var gray =  data[4*l]*0.299 + data[4*l+1]*0.587 + data[4*l+2]*0.114;
           mesh.position.x = parseInt(l / width) * 10 - 1000;
           mesh.position.z = mole(width,l) * 10 - 1000;
-          mesh.position.y = 1/Math.acos(gray/255*p1) * 200 - 1000;
+          mesh.position.y = 1/Math.acos(gray/255*p1) * 1000 - 1000;
     
          if( doMerge ){
             THREE.GeometryUtils.merge(mergedGeo, mesh);
@@ -215,16 +215,14 @@
         document.body.appendChild( container );
 
         camera = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-        camera.position.z = 4000;
-        camera.position.y = 2500;
-        camera.position.x = 1500;
+        camera.position.z = 1000;
 
         scene = new THREE.Scene();
-        scene.fog = new THREE.Fog( 0xffffff, 2500, 10000 );
+        scene.fog = new THREE.Fog( 0xffffff, 1, 10000 );
 
         var options = urlHashJSON.read()  || {};
         options.nCubes  = 1000; //options.nCubes !== undefined  ? options.nCubes  : 2000;
-        options.doMerge = false;//options.doMerge !== undefined ? options.doMerge : false;
+        options.doMerge = true;//options.doMerge !== undefined ? options.doMerge : false;
 
         var nCubes  = options.nCubes;
         var doMerge = options.doMerge;
@@ -250,8 +248,8 @@
 
       function onDocumentMouseMove(event) {
 
-  //      mouseX = ( event.clientX - windowHalfX ) * 10;
-  //      mouseY = ( event.clientY - windowHalfY ) * 10;
+        mouseX = ( event.clientX - windowHalfX ) * 10;
+        mouseY = ( event.clientY - windowHalfY ) * 10;
 
       }
 
@@ -270,15 +268,20 @@
         var ry = Math.sin( new Date().getTime() * 0.0003 ) * 0.5;
         var rz = Math.sin( new Date().getTime() * 0.0002 ) * 0.5;
 
-        // camera.position.x += 150 + (   mouseX - camera.position.x ) * .05;
-        // camera.position.y += ( - mouseY - camera.position.y ) * .05;
+        camera.position.x += 150 + (   mouseX - camera.position.x ) * .05;
+        camera.position.y += ( - mouseY - camera.position.y ) * .05;
 
-        // group.rotation.x = rx;
-        // group.rotation.y = ry;
-        // group.rotation.z = rz;
+        group.rotation.x = rx;
+        group.rotation.y = ry;
+        group.rotation.z = rz;
 
         renderer.render( scene, camera );
       }
+
+
+
+
+
 
 
 
