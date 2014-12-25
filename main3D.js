@@ -34,7 +34,7 @@
 
       function generateCube(nCubes, doMerge, generated){
         var img1 = new Image();//document.getElementById('myImg')
-        img1.src = "value1";
+        img1.src = value1;
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
         canvas.width = img1.width;
