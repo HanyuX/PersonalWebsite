@@ -8,6 +8,8 @@
 
       var mouseX = 0, mouseY = 0;
 
+      var value1,value2;
+
       var windowHalfX = window.innerWidth / 2;
       var windowHalfY = window.innerHeight / 2;
 
@@ -32,7 +34,7 @@
 
       function generateCube(nCubes, doMerge, generated){
         var img1 = new Image();//document.getElementById('myImg')
-        img1.src = "water.png";
+        img1.src = "value1";
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
         canvas.width = img1.width;
@@ -94,6 +96,13 @@
         container = document.createElement( 'div' );
         document.body.appendChild( container );
 
+        var str = location.href.toString().toLowerCase();
+        var arrtmp = str.split("&");
+        var num = arrtmp[0].indexOf("=");
+        value1 = arrtmp[0].substr(num + 1);
+        num = arrtmp[1].indexOf("=");
+        value2 = arrtmp[1].substr(num + 1);
+
         camera = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
         camera.position.z = 4000;
         camera.position.y = 2500;
@@ -104,11 +113,11 @@
 
         var options = urlHashJSON.read()  || {};
         options.nCubes  = 1000; //options.nCubes !== undefined  ? options.nCubes  : 2000;
-        options.doMerge = true;//options.doMerge !== undefined ? options.doMerge : false;
+        options.doMerge = value2;//options.doMerge !== undefined ? options.doMerge : false;
 
         var nCubes  = options.nCubes;
         var doMerge = options.doMerge;
-        
+
         urlHashJSON.write(options)
         
         group     = new THREE.Object3D();         
