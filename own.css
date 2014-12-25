@@ -89,6 +89,14 @@
 
 }
 
+.hcportraitResearch{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    border: 8px solid rgb(237,236,235)
+
+}
+
 .hccontactportrait{
     width: 120px;
     height: 120px;
