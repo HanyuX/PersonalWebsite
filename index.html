@@ -26,10 +26,30 @@
         ga('create', 'UA-45806960-1', 'hcai.me');
         ga('send', 'pageview');
 
+        function preloader()
+　　    {
+　　         heavyImage1 = new Image();
+　　         heavyImage1.src = "blue1.jpg";
+        
+            heavyImage2 = new Image();
+　　         heavyImage2.src = "blue2.jpg";
+
+            heavyImage3 = new Image();
+　　         heavyImage3.src = "blue3.jpg";
+
+            heavyImage4 = new Image();
+　　         heavyImage4.src = "color1.jpg";
+
+            heavyImage5 = new Image();
+　　         heavyImage5.src = "color2.jpg";
+
+            heavyImage6 = new Image();
+　　         heavyImage6.src = "color3.jpg";
+　　    }
     </script>
 
 </head>
-<body>
+<body onLoad="javascript:preloader()">
 <div class="page-wrap">
 
     <div class="navbar navbar-default hcnavigation" role="navigation">
