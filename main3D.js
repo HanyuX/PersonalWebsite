@@ -41,8 +41,6 @@
         canvas.height = img1.height;
         context.drawImage(img1, 0, 0); 
         var width = img1.width, height = img1.height;
-        console.log(width);
-        console.log(height);
         var data = context.getImageData(0, 0, width,height).data;
 
         var p1 = 0.8;
