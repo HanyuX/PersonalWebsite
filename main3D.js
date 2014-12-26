@@ -113,7 +113,7 @@
 
         var options = urlHashJSON.read()  || {};
         options.nCubes  = 1000; //options.nCubes !== undefined  ? options.nCubes  : 2000;
-        if(value2 == "false")
+        if(value2.valueOf() == "false".valueOf())
           options.doMerge = false;//options.doMerge !== undefined ? options.doMerge : false;
         else
           options.doMerge = true;
